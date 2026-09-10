@@ -1,0 +1,28 @@
+digraph LibraryHub {
+  rankdir=BT;
+  graph [fontname="Helvetica", bgcolor="white", splines=ortho, nodesep=0.5, ranksep=0.7];
+  node [shape=record, fontname="Helvetica", fontsize=10, style=filled, fillcolor="#f5f5f5", color="#555555"];
+  edge [fontname="Helvetica", fontsize=9, color="#555555"];
+
+  Member [label="{Member|- id: Long\l- name: String\l- email: String\l}"];
+  Item [label="{\<\<abstract\>\>\nItem|- id: Long\l- title: String\l- available: boolean\l|+ getType(): ItemType\l+ getLoanDurationInDays(): int\l+ getDescription(): String\l+ lend()\l+ giveBack()\l}", fillcolor="#eaeaea"];
+  Book [label="{Book|- author: String\l- isbn: String\l}"];
+  Magazine [label="{Magazine|- publisher: String\l- edition: Integer\l}"];
+  Loan [label="{Loan|- id: Long\l- loanDate: LocalDate\l- dueDate: LocalDate\l- returnDate: LocalDate\l|+ finish(LocalDate)\l+ isActive(): boolean\l+ countDaysLate(LocalDate): long\l}"];
+
+  Reservation [label="{Reservation|- id: Long\l- createdAt: LocalDate\l- status: ReservationStatus\l|+ fulfill()\l+ cancel()\l+ isActive(): boolean\l+ belongsTo(Long): boolean\l}", fillcolor="#dbeafe", color="#1d4ed8"];
+  Fine [label="{\<\<abstract\>\>\nFine|- id: Long\l- issuedAt: LocalDate\l- paid: boolean\l- paymentDate: LocalDate\l|+ getType(): FineType\l+ getAmount(): BigDecimal\l+ getReason(): String\l+ pay(LocalDate)\l}", fillcolor="#bfdbfe", color="#1d4ed8"];
+  OverdueFine [label="{OverdueFine|- daysLate: Integer\l}", fillcolor="#dbeafe", color="#1d4ed8"];
+  DamagedItemFine [label="{DamagedItemFine|- severity: DamageSeverity\l}", fillcolor="#dbeafe", color="#1d4ed8"];
+
+  Book -> Item [arrowhead=onormal];
+  Magazine -> Item [arrowhead=onormal];
+  OverdueFine -> Fine [arrowhead=onormal, color="#1d4ed8"];
+  DamagedItemFine -> Fine [arrowhead=onormal, color="#1d4ed8"];
+
+  Loan -> Member [arrowhead=vee, dir=forward, headlabel="1", taillabel="*", constraint=false];
+  Loan -> Item [arrowhead=vee, dir=forward, headlabel="1", taillabel="*", constraint=false];
+  Reservation -> Member [arrowhead=vee, dir=forward, headlabel="1", taillabel="*", color="#1d4ed8", constraint=false];
+  Reservation -> Item [arrowhead=vee, dir=forward, headlabel="1", taillabel="*", color="#1d4ed8", constraint=false];
+  Fine -> Loan [arrowhead=vee, dir=forward, headlabel="1", taillabel="*", color="#1d4ed8"];
+}

@@ -1,0 +1,191 @@
+@host = http://localhost:8080
+
+### Cadastrar membro
+POST {{host}}/members
+Content-Type: application/json
+
+{
+  "name": "Ana Souza",
+  "email": "ana.souza@ufape.edu.br"
+}
+
+### Cadastrar membro com e-mail repetido, espera 409
+POST {{host}}/members
+Content-Type: application/json
+
+{
+  "name": "Ana S.",
+  "email": "ana.souza@ufape.edu.br"
+}
+
+### Cadastrar membro invalido, espera 400
+POST {{host}}/members
+Content-Type: application/json
+
+{
+  "name": "",
+  "email": "nao-e-email"
+}
+
+### Listar membros
+GET {{host}}/members
+
+### Buscar membro
+GET {{host}}/members/1
+
+### Atualizar membro
+PUT {{host}}/members/1
+Content-Type: application/json
+
+{
+  "name": "Ana Souza Lima",
+  "email": "ana.souza@ufape.edu.br"
+}
+
+### Cadastrar livro
+POST {{host}}/items/books
+Content-Type: application/json
+
+{
+  "title": "Clean Code",
+  "author": "Robert Martin",
+  "isbn": "9780132350884"
+}
+
+### Cadastrar revista
+POST {{host}}/items/magazines
+Content-Type: application/json
+
+{
+  "title": "Superinteressante",
+  "publisher": "Abril",
+  "edition": 450
+}
+
+### Listar itens
+GET {{host}}/items
+
+### Listar itens disponiveis
+GET {{host}}/items/available
+
+### Registrar emprestimo
+POST {{host}}/loans
+Content-Type: application/json
+
+{
+  "memberId": 1,
+  "itemId": 1
+}
+
+### Registrar emprestimo do mesmo item, espera 409
+POST {{host}}/loans
+Content-Type: application/json
+
+{
+  "memberId": 1,
+  "itemId": 1
+}
+
+### Listar emprestimos
+GET {{host}}/loans
+
+### Registrar devolucao
+PUT {{host}}/loans/1/return
+
+### Registrar devolucao de novo, espera 409
+PUT {{host}}/loans/1/return
+
+### Remover membro com emprestimo ativo, espera 409
+DELETE {{host}}/members/1
+
+### Remover item
+DELETE {{host}}/items/1
+
+### ==================== Terceira VA ====================
+
+### Reservar um item disponivel, espera 409
+POST {{host}}/reservations
+Content-Type: application/json
+
+{
+  "memberId": 1,
+  "itemId": 1
+}
+
+### Reservar um item emprestado, espera 201
+POST {{host}}/reservations
+Content-Type: application/json
+
+{
+  "memberId": 2,
+  "itemId": 1
+}
+
+### Reservar de novo para o mesmo membro, espera 409
+POST {{host}}/reservations
+Content-Type: application/json
+
+{
+  "memberId": 2,
+  "itemId": 1
+}
+
+### Listar reservas
+GET {{host}}/reservations
+
+### Buscar reserva
+GET {{host}}/reservations/1
+
+### Cancelar reserva
+PUT {{host}}/reservations/1/cancel
+
+### Cancelar de novo, espera 409
+PUT {{host}}/reservations/1/cancel
+
+### Emprestar item reservado por outro membro, espera 409
+POST {{host}}/loans
+Content-Type: application/json
+
+{
+  "memberId": 1,
+  "itemId": 1
+}
+
+### Registrar multa por dano
+POST {{host}}/fines/damages
+Content-Type: application/json
+
+{
+  "loanId": 1,
+  "severity": "SEVERE"
+}
+
+### Registrar multa por dano de novo no mesmo emprestimo, espera 409
+POST {{host}}/fines/damages
+Content-Type: application/json
+
+{
+  "loanId": 1,
+  "severity": "LIGHT"
+}
+
+### Listar multas
+GET {{host}}/fines
+
+### Saldo devedor
+GET {{host}}/fines/summary
+
+### Emprestar para membro com multa em aberto, espera 409
+POST {{host}}/loans
+Content-Type: application/json
+
+{
+  "memberId": 1,
+  "itemId": 2
+}
+
+### Pagar multa
+PUT {{host}}/fines/1/pay
+
+### Pagar de novo, espera 409
+PUT {{host}}/fines/1/pay

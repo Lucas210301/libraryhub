@@ -1,0 +1,25 @@
+target/
+!.mvn/wrapper/maven-wrapper.jar
+*.class
+*.log
+
+node_modules/
+.next/
+out/
+build/
+.env
+.env.local
+/playwright-report/
+/test-results/
+
+.idea/
+.vscode/
+*.iml
+.DS_Store
+
+# Arquivos que nao devem ser enviados
+RELATORIO_3VA.pdf
+RELATORIO_3VA.md
+RELATORIO_3VA.docx
+GUIA_PASSO_A_PASSO.md
+GUIA_3VA.md
