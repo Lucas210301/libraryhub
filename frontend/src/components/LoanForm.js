@@ -49,7 +49,7 @@ export default function LoanForm({ members, items }) {
           <select name="memberId" className="select w-full" required disabled={!ready}>
             {members.map((member) => (
               <option key={member.id} value={member.id}>
-                {member.name}
+                {member.name} - {member.email}
               </option>
             ))}
           </select>
