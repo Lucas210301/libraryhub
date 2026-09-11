@@ -1,8 +1,5 @@
 import { expect, test } from "@playwright/test";
-
-function uniqueEmail() {
-  return `playwright.${Date.now()}@ufape.edu.br`;
-}
+import { aMember } from "./library";
 
 async function addMember(page, name, email) {
   await page.goto("/members/create");
@@ -12,19 +9,19 @@ async function addMember(page, name, email) {
 }
 
 test("adds a member and shows it in the list", async ({ page }) => {
-  const email = uniqueEmail();
+  const { name, email } = aMember();
 
-  await addMember(page, "Playwright Member", email);
+  await addMember(page, name, email);
 
   await expect(page).toHaveURL(/\/members$/);
   await expect(page.getByRole("cell", { name: email })).toBeVisible();
 });
 
 test("shows an error when the email is already registered", async ({ page }) => {
-  const email = uniqueEmail();
-  await addMember(page, "First Member", email);
+  const { name, email } = aMember();
+  await addMember(page, name, email);
 
-  await addMember(page, "Second Member", email);
+  await addMember(page, "Beatriz Antunes", email);
 
   await expect(page.getByTestId("form-error")).toContainText(email);
 });
