@@ -9,8 +9,8 @@ out/
 build/
 .env
 .env.local
-/playwright-report/
-/test-results/
+playwright-report/
+test-results/
 
 .idea/
 .vscode/
