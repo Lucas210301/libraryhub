@@ -86,6 +86,9 @@ uma regra de negócio).
 O back end é uma API REST e não serve páginas: acessar `http://localhost:8080` na raiz devolve a
 página de erro padrão do Spring. A interface fica em `http://localhost:3000`.
 
+Nas telas de empréstimo e de reserva, o campo de membro mostra o nome seguido do e-mail, para que
+dois membros homônimos possam ser distinguidos na hora de escolher.
+
 ## Como executar
 
 Pré-requisitos: JDK 21, Maven, Node.js 20 ou superior e PostgreSQL.
@@ -180,7 +183,12 @@ npx playwright test --headed
 npx playwright test --reporter=html && npx playwright show-report
 ```
 
-Os testes criam dados a cada execução e não limpam o banco. Para zerar o banco local de
+Os dados de teste saem de `frontend/tests/library.js`, que sorteia títulos e autores reais do
+acervo e acrescenta um código de exemplar, como uma biblioteca faz para distinguir duas cópias do
+mesmo livro. Por isso uma execução cria registros do tipo `Macunaíma (exemplar GFP6)` em vez de
+identificadores artificiais, e a interface continua legível durante o desenvolvimento.
+
+Ainda assim, cada execução acrescenta registros e nada é apagado no fim. Para zerar o banco local de
 desenvolvimento:
 
 ```bash
