@@ -1,6 +1,6 @@
 export default function ErrorAlert({ message }) {
   return (
-    <div role="alert" className="alert alert-error text-sm">
+    <div role="alert" data-testid="form-error" className="alert alert-error text-sm">
       {message}
     </div>
   );

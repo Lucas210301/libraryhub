@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import ErrorAlert from "@/components/ErrorAlert";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { createReservation } from "@/services/reservationActions";
@@ -35,11 +36,7 @@ export default function ReservationForm({ members, items }) {
   return (
     <form onSubmit={handleSubmit} className="card bg-base-100 shadow-sm">
       <div className="card-body gap-5">
-        {error ? (
-          <div role="alert" className="alert alert-error text-sm">
-            {error}
-          </div>
-        ) : null}
+        {error ? <ErrorAlert message={error} /> : null}
 
         {ready ? null : (
           <div role="alert" className="alert text-sm">

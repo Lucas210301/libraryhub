@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import ErrorAlert from "@/components/ErrorAlert";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { createBook, createMagazine } from "@/services/itemActions";
@@ -40,11 +41,7 @@ export default function ItemForm() {
   return (
     <form onSubmit={handleSubmit} className="card bg-base-100 shadow-sm">
       <div className="card-body gap-5">
-        {error ? (
-          <div role="alert" className="alert alert-error text-sm">
-            {error}
-          </div>
-        ) : null}
+        {error ? <ErrorAlert message={error} /> : null}
 
         <label className="flex flex-col gap-1">
           <span className="text-sm font-medium">Type</span>
