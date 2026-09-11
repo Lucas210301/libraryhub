@@ -26,5 +26,5 @@ test("shows an error when the email is already registered", async ({ page }) => 
 
   await addMember(page, "Second Member", email);
 
-  await expect(page.getByRole("alert")).toContainText(email);
+  await expect(page.getByTestId("form-error")).toContainText(email);
 });

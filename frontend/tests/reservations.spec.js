@@ -35,7 +35,7 @@ test("refuses a second reservation of the same item for the same member", async 
   await page.getByLabel("Item on loan").selectOption({ label: title });
   await page.getByRole("button", { name: "Create reservation" }).click();
 
-  await expect(page.getByRole("alert")).toContainText("already has an active reservation");
+  await expect(page.getByTestId("form-error")).toContainText("already has an active reservation");
 });
 
 async function addMember(page, name, email) {
