@@ -41,7 +41,7 @@ Funcionalidades implementadas para resolver as duas:
 
 ## 2. Modelo de Classes
 
-![](docs/diagrama-3va.png){width=80%}
+![](diagrama-3va.png){width=80%}
 
 **Figura 1** — Diagrama de classes. Em azul, as classes criadas nesta VA; em cinza, as da entrega
 anterior, mostradas apenas pelos relacionamentos.
@@ -92,7 +92,7 @@ O módulo foi encaixado nas camadas existentes, sem estrutura paralela, e nenhum
 introduzida: Java 21 com Spring Boot 3.5, Spring Data JPA sobre PostgreSQL, Bean Validation, front end
 em Next.js com axios e daisyUI, e testes com JUnit 5, Mockito, MockMvc, H2 e Playwright.
 
-![](docs/arquitetura-3va.png){width=100%}
+![](arquitetura-3va.png){width=100%}
 
 **Figura 2** — Camadas do sistema. Em azul, os componentes criados nesta VA. Cada camada só conhece a
 de baixo por interface.
@@ -222,7 +222,7 @@ no repositório `Lucas210301/libraryhub`, branch `terceira-va`.
 | Lucas | Reserva e multa | Exceção em classe básica | `ReservationNotActiveException` em `Reservation.fulfill/cancel`; `FineAlreadyPaidException` em `Fine.pay` | `1e44b23` |
 | Lucas | Reserva e multa | Exceção em coleção de negócio | `DuplicatedReservationException` em `ReservationService.create`; `DuplicatedFineException` em `FineService.registerDamage` | `1e44b23` |
 | Lucas | Fila e débito | Exceção em fachada | `ItemAvailableException`, `ItemReservedByAnotherMemberException`, `MemberWithUnpaidFinesException` | `1e44b23` |
-| Lucas | Reserva e multa | Teste unitário (18 casos) | `business/model/ReservationTest.java`, `FineTest.java`, `business/service/ReservationServiceTest.java` | `1e44b23` |
+| Lucas | Reserva e multa | Teste unitário (15 casos) | `business/model/ReservationTest.java`, `FineTest.java`, `business/service/ReservationServiceTest.java` | `1e44b23` |
 | Lucas | Fila e débito | Teste de integração (8 casos) | `integration/ReservationFineIntegrationTest.java` | `1e44b23` |
 | Lucas | Reserva | Teste de API (6 casos) | `api/ReservationControllerApiTest.java` | `1e44b23` |
 | Lucas | Reserva | Teste de interface | `frontend/tests/reservations.spec.js` | `1e44b23`, `daa0cb3`, `9aab374`, `e1edd98` |
