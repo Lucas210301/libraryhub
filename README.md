@@ -1,11 +1,84 @@
 # LibraryHub
 
 Sistema de gestão de empréstimos de biblioteca, desenvolvido para a disciplina de Programação
-Orientada a Objetos (Ciência da Computação — UFAPE).
+Orientada a Objetos (Ciência da Computação — UFAPE). A entrega da terceira VA está na branch
+`terceira-va`.
 
 O sistema controla os membros da biblioteca, os itens do acervo (livros e revistas), os empréstimos
 que ligam um membro a um item, a fila de reservas de um item emprestado e as multas por atraso ou
 dano.
+
+## Terceira VA
+
+A terceira VA tratou de duas situações que a entrega anterior não cobria: a **disputa por um item que
+já está emprestado**, que favorecia quem aparecia primeiro por acaso, e a **falta de consequência para
+a má devolução**, já que um item atrasado ou danificado era aceito como uma devolução em dia. O
+relatório completo está em [`RELATORIO_3VA.md`](RELATORIO_3VA.md), com versões em
+[PDF](RELATORIO_3VA.pdf) e [DOCX](RELATORIO_3VA.docx).
+
+Funcionalidades implementadas, correspondentes às regras 8 a 13 abaixo:
+
+1. **Reserva de item** — o membro entra na fila de um item emprestado; a reserva pode ser cancelada e
+   é atendida quando aquele membro pega o item.
+2. **Fila respeitada no empréstimo** — quando o item volta, o primeiro da fila tem prioridade.
+3. **Multa por atraso** — gerada na devolução fora do prazo, a 1,50 por dia.
+4. **Multa por dano** — registrada pela equipe, com valor pela gravidade.
+5. **Bloqueio por débito** — membro com multa em aberto não faz empréstimo nem é removido.
+6. **Pagamento e saldo devedor** — a tela de multas mostra o total em aberto e dá baixa.
+
+![Camadas do sistema, com os componentes da terceira VA em azul](arquitetura-3va.png)
+
+O diagrama de classes está em [`diagrama-3va.png`](diagrama-3va.png). `Fine` é abstrata e
+tem duas subclasses, `OverdueFine` e `DamagedItemFine`, cada uma com seu cálculo de `getAmount()`;
+`Reservation` é uma entidade própria com estado em `ReservationStatus` (`ACTIVE`, `FULFILLED`,
+`CANCELLED`).
+
+### Onde cada regra é verificada
+
+| Regra | Camada | Exceção |
+| --- | --- | --- |
+| Reserva atendida ou cancelada não muda mais de estado | Classe básica | `ReservationNotActiveException` |
+| Multa paga não é paga de novo | Classe básica | `FineAlreadyPaidException` |
+| Membro não tem duas reservas ativas do mesmo item | Coleção de negócio | `DuplicatedReservationException` |
+| Empréstimo tem no máximo uma multa por dano | Coleção de negócio | `DuplicatedFineException` |
+| Item disponível é emprestado, não reservado | Fachada | `ItemAvailableException` |
+| Item reservado por outro membro não é emprestado | Fachada | `ItemReservedByAnotherMemberException` |
+| Membro com multa em aberto não pega item nem é removido | Fachada | `MemberWithUnpaidFinesException` |
+
+### Testes da terceira VA
+
+| Nível | Arquivo | Casos |
+| --- | --- | --- |
+| Unitário | `ReservationTest`, `FineTest` | 6 + 6 |
+| Unitário com Mockito | `ReservationServiceTest` | 3 |
+| Integração | `ReservationFineIntegrationTest` | 8 |
+| API | `ReservationControllerApiTest` | 6 |
+| Interface | `frontend/tests/reservations.spec.js` | 2 |
+
+### Validação final
+
+| Verificação | Resultado |
+| --- | --- |
+| `mvn test` | 55 testes, 55 aprovados |
+| `npm run lint` | sem erros |
+| `npm run build` | compila, sem aviso de lockfile |
+| `npx playwright test` | 4 aprovados, 0 falhos |
+
+Para conferir a partir de um clone:
+
+```bash
+git clone https://github.com/Lucas210301/libraryhub.git
+cd libraryhub && git checkout terceira-va
+```
+
+### Limitações conhecidas
+
+- O total em aberto das multas é somado em memória, porque o valor de cada multa é calculado.
+- A multa por atraso só é gerada na devolução; um item vencido e nunca devolvido não gera cobrança.
+- A fila de reserva não tem prazo de validade.
+- A multa por dano pode ser registrada para um empréstimo ainda ativo.
+- A suíte de interface não apaga o que cria.
+- O repositório não tem integração contínua.
 
 ## Stack
 
@@ -198,6 +271,10 @@ PGPASSWORD=postgres psql -h 127.0.0.1 -U postgres -c 'CREATE DATABASE libraryhub
 
 ## Documentação
 
+- [`RELATORIO_3VA.md`](RELATORIO_3VA.md), [`RELATORIO_3VA.pdf`](RELATORIO_3VA.pdf) e
+  [`RELATORIO_3VA.docx`](RELATORIO_3VA.docx) — relatório de desenvolvimento da terceira VA.
+- [`arquitetura-3va.png`](arquitetura-3va.png) — camadas do sistema com os componentes da terceira VA.
+- [`diagrama-3va.png`](diagrama-3va.png) — diagrama de classes da terceira VA.
 - `docs/ARQUITETURA.md` — diagrama de classes, camadas, exceções e mapa dos requisitos da disciplina.
 - `docs/api.http` — requisições prontas para o Insomnia, o Postman ou a extensão REST Client.
 - `docs/diagrama-3va.svg` — diagrama de classes do projeto.
