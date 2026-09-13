@@ -1,8 +1,8 @@
 # LibraryHub
 
 Sistema de gestão de empréstimos de biblioteca, desenvolvido para a disciplina de Programação
-Orientada a Objetos (Ciência da Computação — UFAPE). A entrega da terceira VA está na branch
-`terceira-va`.
+Orientada a Objetos (Ciência da Computação — UFAPE). A entrega da terceira VA foi feita na branch
+`terceira-va` e também está na `main`.
 
 O sistema controla os membros da biblioteca, os itens do acervo (livros e revistas), os empréstimos
 que ligam um membro a um item, a fila de reservas de um item emprestado e as multas por atraso ou
@@ -68,7 +68,7 @@ Para conferir a partir de um clone:
 
 ```bash
 git clone https://github.com/Lucas210301/libraryhub.git
-cd libraryhub && git checkout terceira-va
+cd libraryhub && git checkout terceira-va   # a main tem o mesmo conteúdo
 ```
 
 ### Limitações conhecidas
@@ -273,8 +273,10 @@ PGPASSWORD=postgres psql -h 127.0.0.1 -U postgres -c 'CREATE DATABASE libraryhub
 
 - [`RELATORIO_3VA.md`](RELATORIO_3VA.md), [`RELATORIO_3VA.pdf`](RELATORIO_3VA.pdf) e
   [`RELATORIO_3VA.docx`](RELATORIO_3VA.docx) — relatório de desenvolvimento da terceira VA.
+- [`GUIA_3VA.md`](GUIA_3VA.md) — roteiro da terceira VA: branch, testes e entrega.
 - [`arquitetura-3va.png`](arquitetura-3va.png) — camadas do sistema com os componentes da terceira VA.
 - [`diagrama-3va.png`](diagrama-3va.png) — diagrama de classes da terceira VA.
 - `docs/ARQUITETURA.md` — diagrama de classes, camadas, exceções e mapa dos requisitos da disciplina.
 - `docs/api.http` — requisições prontas para o Insomnia, o Postman ou a extensão REST Client.
-- `docs/diagrama-3va.svg` — diagrama de classes do projeto.
+- `docs/diagrama-3va.dot` e `docs/diagrama-3va.svg` — fonte Graphviz e versão vetorial do mesmo
+  diagrama de classes.
