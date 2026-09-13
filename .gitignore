@@ -18,8 +18,5 @@ test-results/
 .DS_Store
 
 # Arquivos que nao devem ser enviados
-RELATORIO_3VA.pdf
-RELATORIO_3VA.md
-RELATORIO_3VA.docx
 GUIA_PASSO_A_PASSO.md
 GUIA_3VA.md
